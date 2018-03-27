@@ -1,0 +1,43 @@
+{
+    "Functions" : [
+        {
+            "Id" : 0,
+            "Name" : "Sentiment",
+            "Type" : 0,
+            "ReturnType": 0,
+            "Params" : {
+                "text" : 0,
+                "score" : 0
+                }
+        },
+        {
+            "Id" : 1,
+            "Name" : "SentimentScript",
+            "Type" : 2,
+            "ReturnType": 0,
+            "Params" : {
+                "id": 1,
+                "text": 0
+                }
+        },
+        {
+            "Id" : 2,
+            "Name" : "CleanTweet",
+            "Type" : 0,
+            "ReturnType": 0,
+            "Params" : {
+                "text" : 0
+                }
+        },
+        {
+            "Id" : 3,
+            "Name" : "CleanTweetScript",
+            "Type" : 2,
+            "ReturnType": 0,
+            "Params" : {
+                "id": 1,
+                "text": 0
+                }
+        }
+    ]
+}
