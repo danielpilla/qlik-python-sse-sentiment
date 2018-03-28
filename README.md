@@ -1,11 +1,12 @@
 # Python Sentiment Service SSE for Qlik
+#### *Example apps for Qlik Sense & QlikView*
 
-![sheet1](https://s3.amazonaws.com/dpi-sse/dpi-python-sse-sentiment/sentiment-app1-sheet1.png)
+![Sheet 1 Script](https://s3.amazonaws.com/dpi-sse/dpi-python-sse-sentiment/sentiment-script-app-sheet-1.png)
 
 ## REQUIREMENTS
 
 - **Assuming prerequisite: [Python with Qlik Sense AAI – Environment Setup](https://www.dropbox.com/s/dhmd3vm7oqurn2m/DPI%20-%20Qlik%20Sense%20AAI%20and%20Python%20Environment%20Setup.pdf?dl=0)**
-	- This is not mandatory and is intended for those who are not as familiar with Python to setup a virtual environment. Feel free to follow the below instructions flexibly if you have experience.
+    - This is not mandatory and is intended for those who are not as familiar with Python to setup a virtual environment. Feel free to follow the below instructions flexibly if you have experience.
 - Qlik Sense February 2018+
 - *Note: the Sentiment() and CleanTweet() functions may be used with QlikView as of November 2017+. Table loads (script tensor) are currently not supported in QlikView, but scalar functions may be used in both the script and front-end. Be aware of the performance implications here as scalar funtions are called record-by-record.*
     - *See how to setup Analytic Connections within QlikView [here](https://help.qlik.com/en-US/qlikview/November2017/Subsystems/Client/Content/Analytic_connections.htm)*
@@ -19,7 +20,7 @@
 - [Setup an AAI Connection in the QMC](#setup-an-aai-connection-in-the-qmc)
 - [Copy the Package Contents and Import Examples](#copy-the-package-contents-and-import-examples)
 - [Prepare And Start Services](#prepare-and-start-services)
-- [Leverage Sentiment Analysis from within Qlik Sense](#leverage-sentiment-analysis-from-within-qlik-sense)
+- [Leverage Sentiment Analysis from within Qlik](#leverage-sentiment-analysis-from-within-qlik)
 
  
 ## PREPARE YOUR PROJECT DIRECTORY
@@ -87,8 +88,8 @@ $ pip install requests
 
 1. Now we want to setup our sentiment service and app. Let’s start by copying over the contents of the example
     from this package to the ‘..\QlikSenseAAI\Sentiment\’ location. Alternatively you can simply clone the repository.
-2. After copying over the contents, go ahead and import the example qvfs found [here](https://www.dropbox.com/s/3v3usx6afav30te/AAI%20-%20Python%20VADER%20Sentiment.qvf?dl=0) and [here](https://www.dropbox.com/s/2hjkitfawlnvhya/AAI%20-%20Python%20VADER%20Sentiment%20Script.qvf?dl=0).
-3. Lastly, import the qsvariable extension zip file found [here](https://github.com/erikwett/qsVariable) using the QMC.
+2. After copying over the contents, go ahead and import the example qvfs found [here](https://s3.amazonaws.com/dpi-sse/dpi-python-sse-sentiment/AAI+-+Python+VADER+Sentiment.qvf) and [here](https://s3.amazonaws.com/dpi-sse/dpi-python-sse-sentiment/AAI+-+Python+VADER+Sentiment.qvf), and if you are using QlikView, you can import the example qvw [here](https://s3.amazonaws.com/dpi-sse/dpi-python-sse-sentiment/DPI+-+Python+Sentiment.qvw).
+3. Lastly, import the qsvariable extension zip file found [here](https://github.com/erikwett/qsVariable) if you are using Qlik Sense.
 
 
 ## PREPARE AND START SERVICES
@@ -103,18 +104,18 @@ $ python __main__.py
 4. You should now see in the command prompt that the Qlik Sense Engine has registered the functions *Sentiment()*, *SentimentScript()*, *CleanTweet()*, and *CleanTweetScript()* from the extension service over port 50055, or whichever port you’ve chosen to leverage.
 
 
-## LEVERAGE SENTIMENT ANALYSIS FROM WITHIN SENSE
+## LEVERAGE SENTIMENT ANALYSIS FROM WITHIN QLIK
 
 1. The *Sentiment()* function leverages the [VADER Sentiment package](https://github.com/cjhutto/vaderSentiment) and accepts two mandatory arguments:
     - *Text (string)*: i.e. a sentence, paragraph, etc
     - *Score (string)*: this is what type of data you'd like to return and can be:
-    	- *all* - returns the raw result containing all information (pipe delimited)
-    	- *pos* - returns the positive polarity
-    	- *neg* - returns the negative polarity
-    	- *neu* - returns the neutral polarity
-    	- *compound* - returns the compound (overall) polarity
+        - *all* - returns the raw result containing all information (pipe delimited)
+        - *pos* - returns the positive polarity
+        - *neg* - returns the negative polarity
+        - *neu* - returns the neutral polarity
+        - *compound* - returns the compound (overall) polarity
 2. Example function calls:
-	
+    
     *Returns all sentiment scores pipe delimited*:
     ``` PythonSentiment.Sentiment(text,'all') ``` 
     
@@ -126,7 +127,7 @@ $ python __main__.py
 
 See the below example of how to utilize the *SentimentScript()* function in the load script:
 
-*Note you can also use the *Sentiment()* function in the script like any other native function, but it will operate record by record (*Scalar*) vs in one call (*Tensor*) as seen below:
+*Note you can also use the *Sentiment()* function in the script like any other native function, but it will operate record by record (*Scalar*) vs in one call (*Tensor*) as seen below. If you are using QlikView, at this point in time you must use the *Sentiment()* function like any other native Qlik function in the script, and cannot use the below method:
 
 ```
 Articles:
@@ -155,23 +156,23 @@ FROM [lib://Qonnections (qlik_qservice)/QVDs\ArticleTitlesForSentimentAnalysis.q
 // TENSOR
 ArticleSentiment:
 LOAD
-	*,
-	If([Article Title Sentiment - Compound]<=-.66,'Very Negative',
+    *,
+    If([Article Title Sentiment - Compound]<=-.66,'Very Negative',
     If([Article Title Sentiment - Compound]<=-.33,'Negative',
     If([Article Title Sentiment - Compound]<=-0,'Somewhat Negative',
     If([Article Title Sentiment - Compound]<=.33,'Somewhat Positive',
     If([Article Title Sentiment - Compound]<=.66,'Positive','Very Positive'))))) AS "Article Title Sentiment - Compound Buckets"
     ;
 LOAD
-	*,
+    *,
     TextBetween("Article Title Sentiment",'neg: ','|') AS "Article Title Sentiment - Negative",
     TextBetween("Article Title Sentiment",'compound: ','|') AS "Article Title Sentiment - Compound",
     TextBetween("Article Title Sentiment",'pos: ','|') AS "Article Title Sentiment - Positive",
     TextBetween("Article Title Sentiment",'neu: ','|') AS "Article Title Sentiment - Neutral"
     ;
 LOAD
-	Field1 AS ID,
-	Field2 AS "Article Title Sentiment"
+    Field1 AS ID,
+    Field2 AS "Article Title Sentiment"
 EXTENSION PythonSentiment.SentimentScript(Articles{"ID","Article Title"});
 ```
 
@@ -179,30 +180,36 @@ EXTENSION PythonSentiment.SentimentScript(Articles{"ID","Article Title"});
 
 
 4. As you saw above, there are two additional functions that I've included that are intended for use with Twitter data. I have not provided examples of these functions in the qvfs.
-	- The *CleanTweet()* function applies a regular expression that is designed to cleanse tweets down to just the text.
-		- Example ``` PythonSentiment.CleanTweet(text) ```
-	- The *CleanTweetScript()* function is the same function but for load script use. It takes a numeric id and text.
-		- Example below of first cleaning the tweet and then running sentiment analysis on it in the script.
+    - The *CleanTweet()* function applies a regular expression that is designed to cleanse tweets down to just the text.
+        - Example ``` PythonSentiment.CleanTweet(text) ```
+    - The *CleanTweetScript()* function is the same function but for load script use. It takes a numeric id and text.
+        - Example below of first cleaning the tweet and then running sentiment analysis on it in the script.
 
 ```
 // CLEAN TWEETS IN BULK USING REGEX IN PYTHON
 PythonRegexSentiment:
 LOAD
-	Field1 AS ID,
+    Field1 AS ID,
     Field2 AS CleansedTweet 
 EXTENSION PythonSentiment.CleanTweetScript(TextData{"ID","Text"});
 
 // RUN SENTIMENT ANALYSIS ON CLEANSED TWEETS
 LEFT JOIN(PythonRegexSentiment)
 LOAD
-	*,
-    TextBetween("Tweet Sentiment",'neg: ','|') AS 		"Tweet Sentiment - Negative",
-    TextBetween("Tweet Sentiment",'compound: ','|') AS 	"Tweet Sentiment - Compound",
-    TextBetween("Tweet Sentiment",'pos: ','|') AS 		"Tweet Sentiment - Positive",
-    TextBetween("Tweet Sentiment",'neu: ','|') AS 		"Tweet Sentiment - Neutral"
+    *,
+    TextBetween("Tweet Sentiment",'neg: ','|') AS       "Tweet Sentiment - Negative",
+    TextBetween("Tweet Sentiment",'compound: ','|') AS  "Tweet Sentiment - Compound",
+    TextBetween("Tweet Sentiment",'pos: ','|') AS       "Tweet Sentiment - Positive",
+    TextBetween("Tweet Sentiment",'neu: ','|') AS       "Tweet Sentiment - Neutral"
     ;
 LOAD
-	Field1 AS ID,
-	Field2 AS "Tweet Sentiment"
+    Field1 AS ID,
+    Field2 AS "Tweet Sentiment"
 EXTENSION PythonSentiment.SentimentScript(PythonRegexSentiment{"ID","CleansedTweet"});
 ```
+
+![Sheet 1](https://s3.amazonaws.com/dpi-sse/dpi-python-sse-sentiment/sentiment-app1-sheet1.png)
+
+![Sheet 1 Script](https://s3.amazonaws.com/dpi-sse/dpi-python-sse-sentiment/sentiment-script-app-sheet-1.png)
+
+![QV Sheet 1](https://s3.amazonaws.com/dpi-sse/dpi-python-sse-sentiment/QVSentiment.png)
