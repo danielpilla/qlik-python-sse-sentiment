@@ -1,10 +1,14 @@
-# Python Sentiment Service SSE for Qlik Sense
+# Python Sentiment Service SSE for Qlik
+
+![sheet1](https://s3.amazonaws.com/dpi-sse/dpi-python-sse-sentiment/sentiment-app1-sheet1.png)
 
 ## REQUIREMENTS
 
 - **Assuming prerequisite: [Python with Qlik Sense AAI – Environment Setup](https://www.dropbox.com/s/dhmd3vm7oqurn2m/DPI%20-%20Qlik%20Sense%20AAI%20and%20Python%20Environment%20Setup.pdf?dl=0)**
 	- This is not mandatory and is intended for those who are not as familiar with Python to setup a virtual environment. Feel free to follow the below instructions flexibly if you have experience.
 - Qlik Sense February 2018+
+- *Note: the Sentiment() and CleanTweet() functions may be used with QlikView as of November 2017+*
+    - *See how to setup Analytic Connections within QlikView [here](https://help.qlik.com/en-US/qlikview/November2017/Subsystems/Client/Content/Analytic_connections.htm)*
 - Python 3.5.3 64 bit
 - Python Libraries: grpcio, vaderSentiment, requests
 
@@ -178,7 +182,7 @@ EXTENSION PythonSentiment.SentimentScript(Articles{"ID","Article Title"});
 	- The *CleanTweet()* function applies a regular expression that is designed to cleanse tweets down to just the text.
 		- Example ``` PythonSentiment.CleanTweet(text) ```
 	- The *CleanTweetScript()* function is the same function but for load script use. It takes a numeric id and text.
-		- Example below of first cleaning the tweet and then running sentiment analysis on it in the script
+		- Example below of first cleaning the tweet and then running sentiment analysis on it in the script.
 
 ```
 // CLEAN TWEETS IN BULK USING REGEX IN PYTHON
