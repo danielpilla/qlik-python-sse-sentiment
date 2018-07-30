@@ -71,6 +71,7 @@ $ workon QlikSenseAAI
 
 ```shell
 $ pip install grpcio
+$ python -m pip install grpcio-tools
 $ pip install vaderSentiment
 $ pip install requests
 ```
