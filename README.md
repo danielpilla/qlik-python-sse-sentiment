@@ -1,11 +1,11 @@
 # Python Sentiment Service SSE for Qlik
 #### *Example apps for Qlik Sense & QlikView*
 
-![Sheet 1 Script](https://s3.amazonaws.com/dpi-sse/dpi-python-sse-sentiment/sentiment-script-app-sheet-1.png)
+![Sheet 1 Script](../assets/sentiment-script-app-sheet-1.png)
 
 ## REQUIREMENTS
 
-- **Assuming prerequisite: [Python with Qlik Sense AAI – Environment Setup](https://s3.amazonaws.com/dpi-sse/DPI+-+Qlik+Sense+AAI+and+Python+Environment+Setup.pdf)**
+- **Assuming prerequisite: [Python with Qlik Sense AAI – Environment Setup](https://docs.google.com/viewer?url=https://github.com/danielpilla/qlik-python-sse-sentiment/blob/assets/DPI%20-%20Qlik%20Sense%20AAI%20and%20Python%20Environment%20Setup.pdf?raw=true)**
     - This is not mandatory and is intended for those who are not as familiar with Python to setup a virtual environment. Feel free to follow the below instructions flexibly if you have experience.
 - Qlik Sense February 2018+
 - *Note: the Sentiment() and CleanTweet() functions may be used with QlikView as of November 2017+. Table loads (script tensor) are currently not supported in QlikView, but scalar functions may be used in both the script and front-end. Be aware of the performance implications here as scalar funtions are called record-by-record.*
@@ -210,11 +210,11 @@ LOAD
 EXTENSION PythonSentiment.SentimentScript(PythonRegexSentiment{"ID","CleansedTweet"});
 ```
 
-![Sheet 1](https://s3.amazonaws.com/dpi-sse/dpi-python-sse-sentiment/sentiment-app1-sheet1.png)
+![Sheet 1](../assets/sentiment-app1-sheet1.png)
 
-![Sheet 1 Script](https://s3.amazonaws.com/dpi-sse/dpi-python-sse-sentiment/sentiment-script-app-sheet-1.png)
+![Sheet 1 Script](../assets/sentiment-script-app-sheet-1.png)
 
-![QV Sheet 1](https://s3.amazonaws.com/dpi-sse/dpi-python-sse-sentiment/QVSentiment.png)
+![QV Sheet 1](../assets/QVSentiment.png)
 
 ## CONFIGURE YOUR SSE AS A WINDOWS SERVICE
 
@@ -226,4 +226,4 @@ Using NSSM is my personal favorite way to turn a Python SSE into a Windows Servi
 
 **Example:**
 
-![ServiceExample](https://s3.amazonaws.com/dpi-sse/PythonAsAService.png)
+![ServiceExample](../assets/PythonAsAService.png)
