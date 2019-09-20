@@ -90,7 +90,7 @@ $ pip install requests
 
 1. Now we want to setup our sentiment service and app. Let’s start by copying over the contents of the example
     from this package to the ‘..\QlikSenseAAI\Sentiment\’ location. Alternatively you can simply clone the repository.
-2. After copying over the contents, go ahead and import the example qvfs found [here](../assets/AAI+-+Python+VADER+Sentiment.qvf?raw=true) and [here](../assets/AAI+-+Python+VADER+Sentiment+Script.qvf?raw=true), and if you are using QlikView, you can import the example qvw [here](../assets/DPI+-+Python+Sentiment.qvw?raw=true).
+2. After copying over the contents, go ahead and import the example qvfs found [here](../assets/AAI%20-%20Python%20VADER%20Sentiment.qvf?raw=true) and [here](../assets/AAI%20-%20Python%20VADER%20Sentiment%20Script.qvf?raw=true), and if you are using QlikView, you can import the example qvw [here](../assets/DPI%20-%20Python%20Sentiment.qvw?raw=true).
 3. Lastly, import the qsvariable extension zip file found [here](https://github.com/erikwett/qsVariable) if you are using Qlik Sense.
 
 
